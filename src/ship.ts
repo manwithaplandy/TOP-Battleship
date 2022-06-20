@@ -5,7 +5,7 @@ export class Ship {
 
   constructor(length: number) {
     this.length = length;
-    this.hitMarker = new Array(length);
+    this.hitMarker = new Array(length).fill(false);
     this.sunk = false;
   }
 
@@ -17,7 +17,11 @@ export class Ship {
     return this.checkArrayTruth(this.hitMarker);
   }
 
-  checkArrayTruth(array: any[]) {
-    return (array: any[]) => array.every(Boolean);
+  private isTrue(element: boolean) {
+    return element.valueOf();
+  }
+
+  private checkArrayTruth(array: any[]) {
+    return array.every(this.isTrue);
   }
 }
