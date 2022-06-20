@@ -29,8 +29,7 @@ export class Gameboard {
     return new Array(10).fill(new Array(10).fill(0));
   }
 
-  placeShip(ship: Ship, horizontal: boolean, y: number, x: number) {
-    // Check that a ship doesn't already exist in any of the spots
+  checkSpaceForShip(ship: Ship, horizontal: boolean, y: number, x: number) {
     let pass = true;
     if (horizontal) {
       for (let i = 0; i < ship.length; i++) {
@@ -45,8 +44,13 @@ export class Gameboard {
         }
       }
     }
+    return pass;
+  }
+
+  placeShip(ship: Ship, horizontal: boolean, y: number, x: number) {
+    // Check that a ship doesn't already exist in any of the spots
     // Sets value of cell to reference ship sitting on it, and which part of the ship it contains
-    if (pass) {
+    if (this.checkSpaceForShip(ship, horizontal, y, x)) {
       if (horizontal) {
         for (let i = 0; i < ship.length; i++) {
           this.board[y][x + i] = [ship, i + 1];
