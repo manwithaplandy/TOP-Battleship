@@ -59,19 +59,5 @@ test("All ships sunk", () => {
   board.placeShip(2, true, 0, 0);
   board.receiveAttack(0, 0);
   board.receiveAttack(1, 0);
-  expect(board.shipCoords).toEqual([]);
   expect(board.checkAllSunk()).toBe(true);
-});
-
-test("Filter Array", () => {
-  const board = new Gameboard();
-  expect(
-    board.filterArray(
-      [
-        [0, 0],
-        [1, 0],
-      ],
-      [0, 0]
-    )
-  ).toBe([[1, 0]]);
 });
