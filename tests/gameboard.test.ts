@@ -1,5 +1,5 @@
-import { Gameboard, shipSpot } from "./gameboard";
-import { Ship } from "./ship";
+import { Gameboard, shipSpot } from "../src/gameboard";
+import { Ship } from "../src/ship";
 
 test("Builds board", () => {
   const board = new Gameboard();

@@ -1,5 +1,5 @@
-import { Gameboard } from "./gameboard";
-import { Ship } from "./ship";
+import { Gameboard } from "./gameboard.js";
+import { Ship } from "./ship.js";
 
 export class Player {
   name: string;
@@ -37,10 +37,13 @@ export class Player {
     const x: number = Math.round(Math.random() * 10);
     const y: number = Math.round(Math.random() * 10);
     const horiz: boolean = !!Math.round(Math.random());
-    const ship: Ship = new Ship(size, name);
-    if (gameboard.checkSpaceForShip(ship, horiz, y, x)) {
+    if (gameboard.checkSpaceForShip(size, horiz, y, x) && x < 10 && y < 10) {
+      const ship: Ship = new Ship(size, name);
       gameboard.placeShip(ship, true, y, x);
+      console.log(`Placed at ${x}, ${y}`);
+      // console.log(gameboard);
     } else {
+      console.log(`${name} invalid placement at ${x}, ${y}, Horiz: ${horiz}`);
       this.placeRandomShip(gameboard, size, name);
     }
   }

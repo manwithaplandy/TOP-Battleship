@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "watch": "jest --watch *.ts"
+    "watch": "jest --watch *.ts",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",

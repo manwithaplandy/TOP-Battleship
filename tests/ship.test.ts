@@ -1,4 +1,4 @@
-import { Ship } from "./ship";
+import { Ship } from "../src/ship.js";
 
 describe("Ship", () => {
   const ship = new Ship(4, "Battleship");
