@@ -1,4 +1,5 @@
-import { Gameboard } from "./gameboard";
+import { Gameboard, shipSpot } from "./gameboard";
+import { Ship } from "./ship";
 
 test("Builds board", () => {
   const board = new Gameboard();
@@ -18,16 +19,18 @@ test("Builds board", () => {
 
 test("places horizontal ship", () => {
   const board = new Gameboard();
-  board.placeShip(2, true, 0, 0);
-  expect(board.board[0][0]).toBe(1);
-  expect(board.board[0][1]).toBe(1);
+  expect(board.board[0][0]).not.toBeTruthy();
+  board.placeShip(new Ship(2, "Patrol Boat"), true, 0, 0);
+  expect(board.board[0][0]).toBeTruthy();
+  expect(board.board[0][1]).toBeTruthy();
 });
 
 test("places vertical ship", () => {
   const board = new Gameboard();
-  board.placeShip(2, false, 0, 0);
-  expect(board.board[0][0]).toBe(1);
-  expect(board.board[1][0]).toBe(1);
+  expect(board.board[0][0]).not.toBeTruthy();
+  board.placeShip(new Ship(2, "Patrol Boat"), false, 0, 0);
+  expect(board.board[0][0]).toBeTruthy();
+  expect(board.board[1][0]).toBeTruthy();
 });
 
 test("Attack misses", () => {
@@ -37,27 +40,36 @@ test("Attack misses", () => {
 
 test("Attack hits", () => {
   const board = new Gameboard();
-  board.placeShip(2, false, 0, 0);
+  board.placeShip(new Ship(2, "Patrol Boat"), false, 0, 0);
+  expect(typeof board.board[0][0]).toBe("object");
   expect(board.receiveAttack(0, 0)).toBe(3);
 });
 
 test("Attack invalid", () => {
   const board = new Gameboard();
-  board.placeShip(2, false, 0, 0);
+  board.placeShip(new Ship(2, "Patrol Boat"), false, 0, 0);
   board.receiveAttack(0, 0);
   expect(board.receiveAttack(0, 0)).toBe(0);
 });
 
+test("Ship is placed on board", () => {
+  const board = new Gameboard();
+  expect(board.board[0][0]).toBe(0);
+  board.placeShip(new Ship(2, "Patrol Boat"), false, 0, 0);
+  expect(board.board[0][0]).toBeTruthy();
+});
+
 test("All ships not sunk", () => {
   const board = new Gameboard();
-  board.placeShip(2, true, 0, 0);
+  board.placeShip(new Ship(2, "Patrol Boat"), false, 0, 0);
   expect(board.checkAllSunk()).toBe(false);
 });
 
 test("All ships sunk", () => {
   const board = new Gameboard();
-  board.placeShip(2, true, 0, 0);
+  board.placeShip(new Ship(2, "Patrol Boat"), false, 0, 0);
   board.receiveAttack(0, 0);
   board.receiveAttack(1, 0);
+  expect(board.board[0][0]).toBe(3);
   expect(board.checkAllSunk()).toBe(true);
 });

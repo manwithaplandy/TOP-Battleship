@@ -1,9 +1,11 @@
 export class Ship {
+  name: string;
   length: number;
   hitMarker: boolean[];
   sunk: boolean;
 
-  constructor(length: number) {
+  constructor(length: number, name: string) {
+    this.name = name;
     this.length = length;
     this.hitMarker = new Array(length).fill(false);
     this.sunk = false;

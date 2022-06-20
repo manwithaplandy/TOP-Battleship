@@ -1,7 +1,7 @@
 import { Ship } from "./ship";
 
 describe("Ship", () => {
-  const ship = new Ship(4);
+  const ship = new Ship(4, "Battleship");
 
   test("defines hit()", () => {
     expect(typeof ship.hit).toBe("function");
