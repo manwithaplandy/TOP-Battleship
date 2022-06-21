@@ -15,6 +15,7 @@
 .display-container {
   display: grid;
   place-items: center;
+  gap: 5rem;
 }
 
 .board-container {
@@ -29,4 +30,48 @@
 .computer-board {
   display: grid;
   place-items: center;
+}
+
+.computer-label,
+.player-label {
+  text-align: center;
+  font-size: xx-large;
+  margin-bottom: 1rem;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  min-width: 5rem;
+  height: 5rem;
+  outline: solid black 1px;
+  display: grid;
+  place-items: center;
+  background-color: lightskyblue;
+}
+
+.cell:hover {
+  background-color: lightgrey;
+}
+
+.display-container > * {
+  font-size: xx-large;
+}
+
+.attacked {
+  cursor: not-allowed;
+}
+
+.attacked:hover {
+  background-color: inherit;
+}
+
+.hit {
+  background-color: red;
+}
+
+.miss {
+  background-color: darkgrey;
 }

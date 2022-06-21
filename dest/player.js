@@ -26,6 +26,7 @@ export class Player {
     }
     placeRandomShip(gameboard, size, name) {
         const x = Math.round(Math.random() * 10);
+        // TO DO - Subtract x/y value based on size of ship so the ship cannot go past the end of the board (x-axis for horizontal, y-axis for vertical)
         const y = Math.round(Math.random() * 10);
         const horiz = !!Math.round(Math.random());
         if (gameboard.checkSpaceForShip(size, horiz, y, x) && x < 10 && y < 10) {

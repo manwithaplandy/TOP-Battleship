@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <script type="module" src="./dest/src/game.js" defer></script>
+    <script type="module" src="./dest/game.js"></script>
     <title>Battleship</title>
   </head>
   <body>
@@ -13,10 +13,17 @@
       <div class="main">
         <div class="display-container">
           <div class="display">PLAYER TURN</div>
+          <div class="hit-display">HIT!</div>
         </div>
         <div class="board-container">
-          <div class="player-board">PLAYER BOARD</div>
-          <div class="computer-board">COMPUTER BOARD</div>
+          <div class="player-container">
+            <div class="player-label">PLAYER BOARD</div>
+            <div class="player-board"></div>
+          </div>
+          <div class="computer-container">
+            <div class="computer-label">COMPUTER BOARD</div>
+            <div class="computer-board"></div>
+          </div>
         </div>
       </div>
     </div>

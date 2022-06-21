@@ -1,8 +1,14 @@
 import { Gameboard } from "./gameboard.js";
 import { Player } from "./player.js";
 import { Ship } from "./ship.js";
-
+import { drawBoard } from "./dom.js";
 let game_on = false;
+
+// For testing
+document.addEventListener("click", () => {
+  game_on = true;
+  console.log(`Game on: ${game_on}`);
+});
 
 interface legend extends Object {
   [key: string]: any;
@@ -29,6 +35,8 @@ while (game_on) {
   //Test placeholder values; replace with inputs later
   const player = new Player("Player", true, new Gameboard());
   const computer = new Player("Computer", false, new Gameboard());
+  drawBoard(player.playerboard, player.name);
+  drawBoard(computer.playerboard, computer.name);
 
   let playerTurn = player;
 
