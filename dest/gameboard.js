@@ -16,7 +16,15 @@ export class Gameboard {
         this.board = this.buildBoard();
     }
     buildBoard() {
-        return new Array(10).fill(new Array(10).fill(0));
+        let board = [];
+        for (let i = 0; i < 10; i++) {
+            board[i] = [];
+            for (let j = 0; j < 10; j++) {
+                board[i][j] = 0;
+            }
+        }
+        return board;
+        // return new Array(10).fill(new Array(10).fill(0));
     }
     checkSpaceForShip(size, horizontal, y, x) {
         let pass = true;
@@ -24,13 +32,15 @@ export class Gameboard {
             for (let i = 0; i < size; i++) {
                 if (this.board[y][x + i] != 0) {
                     pass = false;
+                    break;
                 }
             }
         }
-        else {
+        else if (!horizontal) {
             for (let i = 0; i < size; i++) {
                 if (this.board[y + 1][x] != 0) {
                     pass = false;
+                    break;
                 }
             }
         }
@@ -42,13 +52,13 @@ export class Gameboard {
         if (this.checkSpaceForShip(ship.length, horizontal, y, x)) {
             if (horizontal) {
                 for (let i = 0; i < ship.length; i++) {
-                    this.board[y][x + i] = [ship, i + 1];
+                    this.changeValue(x + i, y, [ship, i + 1]);
                 }
-            }
-            else {
-                for (let i = 0; i < ship.length; i++) {
-                    this.board[y + 1][x] = [ship, i + 1];
-                }
+                // } else if (!horizontal) {
+                //   for (let i = 0; i < ship.length; i++) {
+                //     this.changeValue(x, y + i, [ship, i + 1]);
+                //     // this.board[y + 1][x] = [ship, i + 1];
+                //   }
             }
             // Append ship to the ships array for sunk checking
             this.ships.push(ship);
@@ -66,7 +76,6 @@ export class Gameboard {
             // Space does not contain un-hit ship
             if (this.board[y][x] > 1) {
                 // Space has already been attacked -> invalid move
-                this.changeValue(x, y, 0);
                 return 0;
             }
             else if (this.board[y][x] === 0) {
