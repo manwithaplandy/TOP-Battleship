@@ -28,24 +28,30 @@ export function drawBoard(board, player) {
         }
     }
 }
-export function updateCell(cell, value) {
-    cell.textContent = value;
-}
-export function cellAttacked(cell, hit) {
+// Using background colors instead of cell values for hits/misses
+// export function updateCell(cell: HTMLDivElement, value: string) {
+//   cell.textContent = value;
+// }
+function cellAttacked(cell, hit) {
     cell.classList.add("attacked");
     if (hit) {
         cell.classList.add("hit");
         hitDisplay.textContent = "HIT!";
+        setTimeout(() => (hitDisplay.textContent = ""), 5000);
     }
     else {
         cell.classList.add("miss");
         hitDisplay.textContent = "MISS!";
+        setTimeout(() => (hitDisplay.textContent = ""), 5000);
     }
+}
+export function findCell(x, y) {
+    console.log(document.querySelector(`[data-x="${x}"][data-y="${y}"]`));
 }
 export function refreshTurn(player) {
     playerDisplay.textContent = player.name;
 }
-export function attackCell(c, player) {
+function attackCell(c, player) {
     const cell = c.target;
     if (!cell.classList.contains("attacked")) {
         const result = player.playerboard.receiveAttack(parseInt(cell.dataset.x), parseInt(cell.dataset.y));
@@ -59,6 +65,11 @@ export function attackCell(c, player) {
 }
 export function setUpListener(computer) {
     computerBoard === null || computerBoard === void 0 ? void 0 : computerBoard.addEventListener("click", (c) => {
+        attackCell(c, computer);
+    });
+}
+export function teardownListener(computer) {
+    computerBoard === null || computerBoard === void 0 ? void 0 : computerBoard.removeEventListener("click", (c) => {
         attackCell(c, computer);
     });
 }

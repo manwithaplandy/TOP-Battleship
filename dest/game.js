@@ -1,6 +1,6 @@
 import { Gameboard } from "./gameboard.js";
 import { Player } from "./player.js";
-import { drawBoard, setUpListener } from "./dom.js";
+import { drawBoard, findCell, refreshTurn, setUpListener, teardownListener, } from "./dom.js";
 let game_on = true;
 // Ships legend:
 // Size / Name
@@ -24,8 +24,6 @@ while (game_on) {
     drawBoard(computer.playerboard, computer.name);
     // Human player goes first because robots need to know their place
     let playerTurn = player;
-    // Set up event listener on computer's game board
-    setUpListener(computer);
     // Place all ships for computer randomly
     computer.placeRandomShip(computer.playerboard, 5, "Carrier");
     computer.placeRandomShip(computer.playerboard, 4, "Battleship");
@@ -38,5 +36,19 @@ while (game_on) {
     player.placeRandomShip(player.playerboard, 3, "Destroyer");
     player.placeRandomShip(player.playerboard, 3, "Submarine");
     player.placeRandomShip(player.playerboard, 2, "Patrol Boat");
+    //Test
+    findCell(0, 0);
+    while (playerTurn) {
+        // Set up event listener on computer's game board
+        setUpListener(computer);
+        refreshTurn(player);
+        break;
+    }
+    while (!playerTurn) {
+        teardownListener(computer);
+        refreshTurn(computer);
+        computer.randomAttack(player.playerboard);
+        break;
+    }
     break;
 }

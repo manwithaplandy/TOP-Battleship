@@ -45,7 +45,6 @@ export class Player {
             const ship = new Ship(size, name);
             gameboard.placeShip(ship, true, y, x);
             console.log(`Placed at ${x}, ${y}`);
-            // console.log(gameboard);
         }
         else {
             console.log(`${name} invalid placement at ${x}, ${y}, Horiz: ${horiz}`);

@@ -32,19 +32,28 @@ export function drawBoard(board: Gameboard, player: string) {
   }
 }
 
-export function updateCell(cell: HTMLDivElement, value: string) {
-  cell.textContent = value;
-}
+// Using background colors instead of cell values for hits/misses
+// export function updateCell(cell: HTMLDivElement, value: string) {
+//   cell.textContent = value;
+// }
 
-export function cellAttacked(cell: HTMLDivElement, hit: boolean) {
+function cellAttacked(cell: HTMLDivElement, hit: boolean) {
   cell.classList.add("attacked");
   if (hit) {
     cell.classList.add("hit");
     hitDisplay!.textContent = "HIT!";
+    setTimeout(() => (hitDisplay!.textContent = ""), 5000);
   } else {
     cell.classList.add("miss");
     hitDisplay!.textContent = "MISS!";
+    setTimeout(() => (hitDisplay!.textContent = ""), 5000);
   }
+}
+
+export function findCell(x: number, y: number) {
+  return document.querySelector(
+    `[data-x="${x}"][data-y="${y}"]`
+  ) as HTMLDivElement;
 }
 
 export function refreshTurn(player: Player) {
@@ -68,6 +77,12 @@ export function attackCell(c: Event, player: Player) {
 
 export function setUpListener(computer: Player) {
   computerBoard?.addEventListener("click", (c) => {
+    attackCell(c, computer);
+  });
+}
+
+export function teardownListener(computer: Player) {
+  computerBoard?.removeEventListener("click", (c) => {
     attackCell(c, computer);
   });
 }

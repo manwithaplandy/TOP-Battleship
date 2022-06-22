@@ -23,8 +23,8 @@ export class Player {
   }
 
   randomAttack(gameboard: Gameboard) {
-    const x = Math.round(Math.random() * 10);
-    const y = Math.round(Math.random() * 10);
+    const x = Math.min(Math.round(Math.random() * 10), 9);
+    const y = Math.min(Math.round(Math.random() * 10), 9);
     if (this.checkSpace(x, y, gameboard)) {
       this.attack(x, y, gameboard);
     } else {
