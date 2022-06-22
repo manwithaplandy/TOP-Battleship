@@ -25,11 +25,23 @@ export class Player {
         }
     }
     placeRandomShip(gameboard, size, name) {
-        const x = Math.round(Math.random() * 10);
+        let x = Math.round(Math.random() * 10);
         // TO DO - Subtract x/y value based on size of ship so the ship cannot go past the end of the board (x-axis for horizontal, y-axis for vertical)
-        const y = Math.round(Math.random() * 10);
+        let y = Math.round(Math.random() * 10);
         const horiz = !!Math.round(Math.random());
-        if (gameboard.checkSpaceForShip(size, horiz, y, x) && x < 10 && y < 10) {
+        if (x === 10) {
+            x--;
+        }
+        if (y === 10) {
+            y--;
+        }
+        if (horiz) {
+            x = Math.abs(x - size);
+        }
+        else {
+            y = Math.abs(y - size);
+        }
+        if (gameboard.checkSpaceForShip(size, horiz, y, x)) {
             const ship = new Ship(size, name);
             gameboard.placeShip(ship, true, y, x);
             console.log(`Placed at ${x}, ${y}`);
@@ -37,7 +49,7 @@ export class Player {
         }
         else {
             console.log(`${name} invalid placement at ${x}, ${y}, Horiz: ${horiz}`);
-            this.placeRandomShip(gameboard, size, name);
+            return 0;
         }
     }
 }

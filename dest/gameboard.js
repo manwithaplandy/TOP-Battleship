@@ -30,7 +30,7 @@ export class Gameboard {
         let pass = true;
         if (horizontal) {
             for (let i = 0; i < size; i++) {
-                if (this.board[y][x + i] != 0) {
+                if (!this.checkSingleSpace(x + i, y)) {
                     pass = false;
                     break;
                 }
@@ -38,13 +38,16 @@ export class Gameboard {
         }
         else if (!horizontal) {
             for (let i = 0; i < size; i++) {
-                if (this.board[y + 1][x] != 0) {
+                if (!this.checkSingleSpace(x, y + i)) {
                     pass = false;
                     break;
                 }
             }
         }
         return pass;
+    }
+    checkSingleSpace(x, y) {
+        return !this.board[y][x];
     }
     placeShip(ship, horizontal, y, x) {
         // Check that a ship doesn't already exist in any of the spots
@@ -54,11 +57,12 @@ export class Gameboard {
                 for (let i = 0; i < ship.length; i++) {
                     this.changeValue(x + i, y, [ship, i + 1]);
                 }
-                // } else if (!horizontal) {
-                //   for (let i = 0; i < ship.length; i++) {
-                //     this.changeValue(x, y + i, [ship, i + 1]);
-                //     // this.board[y + 1][x] = [ship, i + 1];
-                //   }
+            }
+            else if (!horizontal) {
+                for (let i = 0; i < ship.length; i++) {
+                    this.changeValue(x, y + i, [ship, i + 1]);
+                    // this.board[y + 1][x] = [ship, i + 1];
+                }
             }
             // Append ship to the ships array for sunk checking
             this.ships.push(ship);

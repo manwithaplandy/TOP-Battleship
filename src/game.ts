@@ -38,19 +38,25 @@ while (game_on) {
   drawBoard(player.playerboard, player.name);
   drawBoard(computer.playerboard, computer.name);
 
+  // Human player goes first because robots need to know their place
   let playerTurn = player;
 
+  // Set up event listener on computer's game board
   setUpListener(computer);
 
-  console.log(player.playerboard);
+  // Place all ships for computer randomly
+  computer.placeRandomShip(computer.playerboard, 5, "Carrier");
+  computer.placeRandomShip(computer.playerboard, 4, "Battleship");
+  computer.placeRandomShip(computer.playerboard, 3, "Destroyer");
+  computer.placeRandomShip(computer.playerboard, 3, "Submarine");
+  computer.placeRandomShip(computer.playerboard, 2, "Patrol Boat");
 
-  player.playerboard.placeShip(new Ship(5, "Carrier"), true, 0, 0);
-  player.playerboard.placeShip(new Ship(4, "Battleship"), true, 1, 0);
-  player.playerboard.placeShip(new Ship(3, "Destroyer"), true, 2, 0);
-
-  computer.playerboard.placeShip(new Ship(5, "Carrier"), true, 0, 0);
-  computer.playerboard.placeShip(new Ship(4, "Battleship"), true, 1, 0);
-  computer.playerboard.placeShip(new Ship(3, "Destroyer"), true, 2, 0);
+  // FOR TESTING - Set up all ships for player randomly
+  player.placeRandomShip(player.playerboard, 5, "Carrier");
+  player.placeRandomShip(player.playerboard, 4, "Battleship");
+  player.placeRandomShip(player.playerboard, 3, "Destroyer");
+  player.placeRandomShip(player.playerboard, 3, "Submarine");
+  player.placeRandomShip(player.playerboard, 2, "Patrol Boat");
 
   break;
 }
