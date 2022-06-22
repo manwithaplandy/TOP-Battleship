@@ -1,6 +1,6 @@
 import { Gameboard } from "./gameboard.js";
 import { Player } from "./player.js";
-import { drawBoard, findCell, refreshTurn, setUpListener, teardownListener, } from "./dom.js";
+import { attackCell, drawBoard, findCell, refreshTurn, setUpListener, teardownListener, } from "./dom.js";
 let game_on = true;
 // Ships legend:
 // Size / Name
@@ -47,7 +47,8 @@ while (game_on) {
     while (!playerTurn) {
         teardownListener(computer);
         refreshTurn(computer);
-        computer.randomAttack(player.playerboard);
+        let coords = computer.randomAttack(player.playerboard);
+        attackCell(findCell(coords[0], coords[1]), player);
         break;
     }
     break;

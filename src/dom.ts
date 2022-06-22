@@ -60,8 +60,11 @@ export function refreshTurn(player: Player) {
   playerDisplay!.textContent = player.name;
 }
 
-export function attackCell(c: Event, player: Player) {
-  const cell = c.target as HTMLDivElement;
+function eventTarget(event: Event) {
+  return event.target as HTMLDivElement;
+}
+
+export function attackCell(cell: HTMLDivElement, player: Player) {
   if (!cell.classList.contains("attacked")) {
     const result = player.playerboard.receiveAttack(
       parseInt(cell.dataset.x!),
@@ -77,12 +80,12 @@ export function attackCell(c: Event, player: Player) {
 
 export function setUpListener(computer: Player) {
   computerBoard?.addEventListener("click", (c) => {
-    attackCell(c, computer);
+    attackCell(eventTarget(c), computer);
   });
 }
 
 export function teardownListener(computer: Player) {
   computerBoard?.removeEventListener("click", (c) => {
-    attackCell(c, computer);
+    attackCell(eventTarget(c), computer);
   });
 }

@@ -46,13 +46,15 @@ function cellAttacked(cell, hit) {
     }
 }
 export function findCell(x, y) {
-    console.log(document.querySelector(`[data-x="${x}"][data-y="${y}"]`));
+    return document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
 }
 export function refreshTurn(player) {
     playerDisplay.textContent = player.name;
 }
-function attackCell(c, player) {
-    const cell = c.target;
+function eventTarget(event) {
+    return event.target;
+}
+export function attackCell(cell, player) {
     if (!cell.classList.contains("attacked")) {
         const result = player.playerboard.receiveAttack(parseInt(cell.dataset.x), parseInt(cell.dataset.y));
         if (result === 2) {
@@ -65,11 +67,11 @@ function attackCell(c, player) {
 }
 export function setUpListener(computer) {
     computerBoard === null || computerBoard === void 0 ? void 0 : computerBoard.addEventListener("click", (c) => {
-        attackCell(c, computer);
+        attackCell(eventTarget(c), computer);
     });
 }
 export function teardownListener(computer) {
     computerBoard === null || computerBoard === void 0 ? void 0 : computerBoard.removeEventListener("click", (c) => {
-        attackCell(c, computer);
+        attackCell(eventTarget(c), computer);
     });
 }
