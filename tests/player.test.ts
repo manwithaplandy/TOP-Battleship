@@ -1,5 +1,5 @@
-import { Gameboard } from "../src/gameboard.js";
-import { Player } from "../src/player.js";
+import { Gameboard } from "../src/gameboard";
+import { Player } from "../src/player";
 
 test("Player is created", () => {
   expect(new Player("Andy", true, new Gameboard())).toBeInstanceOf(Player);

@@ -1,35 +1,38 @@
-import { Gameboard } from "./gameboard.js";
-import { Ship } from "./ship.js";
+import { Gameboard } from "./gameboard";
+import { Ship } from "./ship";
 
 export class Player {
   name: string;
-  player: boolean;
+  turn: boolean;
   playerboard: Gameboard;
 
-  constructor(name: string, player: boolean, board: Gameboard) {
+  constructor(name: string, turn: boolean, board: Gameboard) {
     this.name = name;
-    this.player = player;
+    this.turn = turn;
     this.playerboard = board;
   }
 
   attack(x: number, y: number, gameboard: Gameboard) {
     if (this.checkSpace(x, y, gameboard)) {
-      gameboard.receiveAttack(x, y);
+      return gameboard.receiveAttack(x, y);
     }
   }
 
   private checkSpace(x: number, y: number, gameboard: Gameboard) {
-    return gameboard.board[y][x] === 0;
+    return (
+      gameboard.board[y][x] === 0 || typeof gameboard.board[y][x] === "object"
+    );
   }
 
-  randomAttack(gameboard: Gameboard) {
+  randomAttack(gameboard: Gameboard): number[] {
     const x = Math.min(Math.round(Math.random() * 10), 9);
     const y = Math.min(Math.round(Math.random() * 10), 9);
     if (this.checkSpace(x, y, gameboard)) {
-      this.attack(x, y, gameboard);
+      const result = this.attack(x, y, gameboard);
+      return [x, y, result!];
     } else {
       // If move is invalid, call function again
-      this.randomAttack(gameboard);
+      return this.randomAttack(gameboard);
     }
   }
 
@@ -52,9 +55,7 @@ export class Player {
     if (gameboard.checkSpaceForShip(size, horiz, y, x)) {
       const ship: Ship = new Ship(size, name);
       gameboard.placeShip(ship, true, y, x);
-      console.log(`Placed at ${x}, ${y}`);
     } else {
-      console.log(`${name} invalid placement at ${x}, ${y}, Horiz: ${horiz}`);
       return 0;
     }
   }

@@ -1,4 +1,4 @@
-import { Ship } from "./ship.js";
+import { Ship } from "./ship";
 
 export type shipSpot = [ship: Ship, number: number];
 
@@ -64,14 +64,14 @@ export class Gameboard {
   placeShip(ship: Ship, horizontal: boolean, y: number, x: number) {
     // Check that a ship doesn't already exist in any of the spots
     // Sets value of cell to reference ship sitting on it, and which part of the ship it contains
-    if (this.checkSpaceForShip(ship.length, horizontal, y, x)) {
+    if (this.checkSpaceForShip(ship.size, horizontal, y, x)) {
       if (horizontal) {
-        for (let i = 0; i < ship.length; i++) {
-          this.changeValue(x + i, y, [ship, i + 1]);
+        for (let i = 0; i < ship.size; i++) {
+          this.changeValue(x + i, y, [ship, i]);
         }
       } else if (!horizontal) {
-        for (let i = 0; i < ship.length; i++) {
-          this.changeValue(x, y + i, [ship, i + 1]);
+        for (let i = 0; i < ship.size; i++) {
+          this.changeValue(x, y + i, [ship, i]);
           // this.board[y + 1][x] = [ship, i + 1];
         }
       }
@@ -105,7 +105,13 @@ export class Gameboard {
       const theArr: shipSpot = this.board[y][x] as shipSpot;
       this.sendHit(theArr[0], theArr[1]);
       this.changeValue(x, y, 3);
-      return 3;
+      console.log(theArr[0].hitMarker);
+      if (theArr[0].isSunk()) {
+        console.log(this.board);
+        return 4;
+      } else {
+        return 3;
+      }
     }
   }
 

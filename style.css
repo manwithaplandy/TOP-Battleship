@@ -75,3 +75,41 @@
 .miss {
   background-color: darkgrey;
 }
+
+.start-modal-background {
+  display: grid;
+  z-index: 1;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.487);
+  height: 100vh;
+  width: 100vw;
+}
+
+.start-modal {
+  place-self: center;
+  z-index: 2;
+  position: absolute;
+  height: 40vh;
+  width: 30vw;
+  background-color: whitesmoke;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  place-items: center;
+  font-size: 3rem;
+}
+
+#name {
+  width: 20ch;
+  height: 3rem;
+  font-size: 3rem;
+}
+
+#start-game {
+  font-size: 3rem;
+  padding: 2rem;
+  border-radius: 3rem;
+}
+
+.hidden {
+  display: none;
+}

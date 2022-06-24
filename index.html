@@ -5,15 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <script type="module" src="./dest/game.js"></script>
+    <script src="./dest/bundle.js" defer></script>
     <title>Battleship</title>
   </head>
   <body>
     <div class="container">
       <div class="main">
+        <div class="start-modal-background">
+          <div class="start-modal">
+            <div class="modal-header">Please enter your name</div>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Player"
+              required
+            />
+            <button id="start-game">Start Game</button>
+          </div>
+        </div>
         <div class="display-container">
-          <div class="display">PLAYER TURN</div>
-          <div class="hit-display">HIT!</div>
+          <div class="display"></div>
+          <div class="hit-display"></div>
+          <div class="comp-display"></div>
+          <div class="sunk-display"></div>
         </div>
         <div class="board-container">
           <div class="player-container">

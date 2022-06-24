@@ -1,3 +1,4 @@
+import { gameOn } from "./game";
 // Draw game boards
 // Draw ships on player's board
 // Refresh board when turn is taken
@@ -28,10 +29,9 @@ export function drawBoard(board, player) {
         }
     }
 }
-// Using background colors instead of cell values for hits/misses
-// export function updateCell(cell: HTMLDivElement, value: string) {
-//   cell.textContent = value;
-// }
+export function declareWinner(winner) {
+    hitDisplay.textContent = `WINNER! ${winner} has sunk all of their opponent's battleships!`;
+}
 function cellAttacked(cell, hit) {
     cell.classList.add("attacked");
     if (hit) {
@@ -49,7 +49,7 @@ export function findCell(x, y) {
     return document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
 }
 export function refreshTurn(player) {
-    playerDisplay.textContent = player.name;
+    playerDisplay.textContent = `Current turn: player.name`;
 }
 function eventTarget(event) {
     return event.target;
@@ -65,13 +65,36 @@ export function attackCell(cell, player) {
         }
     }
 }
-export function setUpListener(computer) {
+export function setUpListener(computer, player) {
     computerBoard === null || computerBoard === void 0 ? void 0 : computerBoard.addEventListener("click", (c) => {
         attackCell(eventTarget(c), computer);
+        player.turn = !player.turn;
     });
 }
-export function teardownListener(computer) {
+export function teardownListener(computer, player) {
     computerBoard === null || computerBoard === void 0 ? void 0 : computerBoard.removeEventListener("click", (c) => {
         attackCell(eventTarget(c), computer);
+        player.turn = !player.turn;
+    });
+}
+// Initial game setup - Set event listeners for modal
+const nameInput = document.querySelector("#name");
+const modal = document.querySelector(".start-modal");
+const background = document.querySelector(".start-modal-background");
+const startButton = document.querySelector("#start-game");
+export function gameSetup(player) {
+    startButton.addEventListener("click", () => {
+        if (nameInput.value) {
+            player.name = nameInput.value;
+            modal === null || modal === void 0 ? void 0 : modal.classList.add("hidden");
+            background === null || background === void 0 ? void 0 : background.classList.add("hidden");
+            gameOn();
+        }
+        else {
+            player.name = "Player";
+            modal === null || modal === void 0 ? void 0 : modal.classList.add("hidden");
+            background === null || background === void 0 ? void 0 : background.classList.add("hidden");
+            gameOn();
+        }
     });
 }

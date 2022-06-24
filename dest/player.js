@@ -1,8 +1,8 @@
-import { Ship } from "./ship.js";
+import { Ship } from "./ship";
 export class Player {
-    constructor(name, player, board) {
+    constructor(name, turn, board) {
         this.name = name;
-        this.player = player;
+        this.turn = turn;
         this.playerboard = board;
     }
     attack(x, y, gameboard) {
@@ -18,6 +18,7 @@ export class Player {
         const y = Math.min(Math.round(Math.random() * 10), 9);
         if (this.checkSpace(x, y, gameboard)) {
             this.attack(x, y, gameboard);
+            return [x, y];
         }
         else {
             // If move is invalid, call function again

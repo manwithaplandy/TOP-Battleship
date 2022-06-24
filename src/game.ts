@@ -1,6 +1,5 @@
-import { Gameboard } from "./gameboard.js";
-import { Player } from "./player.js";
-import { Ship } from "./ship.js";
+import { Gameboard } from "./gameboard";
+import { Player } from "./player";
 import {
   attackCell,
   drawBoard,
@@ -8,8 +7,16 @@ import {
   refreshTurn,
   setUpListener,
   teardownListener,
-} from "./dom.js";
-let game_on = true;
+  gameSetup,
+  declareWinner,
+  cellAttacked,
+} from "./dom";
+
+const player = new Player("", true, new Gameboard());
+const computer = new Player("Computer", false, new Gameboard());
+let game_on = false;
+
+gameSetup(player);
 
 // // For testing
 // document.addEventListener("click", () => {
@@ -38,15 +45,35 @@ const shipLegend: legend = {
   "Patrol Boat": 2,
 };
 
-while (game_on) {
-  //Test placeholder values; replace with inputs later
-  const player = new Player("Player", true, new Gameboard());
-  const computer = new Player("Computer", false, new Gameboard());
-  drawBoard(player.playerboard, player.name);
-  drawBoard(computer.playerboard, computer.name);
+export function computerTurn() {
+  refreshTurn(computer);
+  let coords: number[] = computer.randomAttack(player.playerboard) as number[];
+  cellAttacked(
+    findCell(coords[0], coords[1]),
+    coords[2] > 2 ? true : false,
+    computer
+  );
+  if (checkWin(player.playerboard, computer.playerboard)) {
+    declareWinner(computer);
+    playerTurn();
+  } else {
+    playerTurn();
+  }
+}
 
+function playerTurn() {
+  refreshTurn(player);
+}
+
+export function checkWin(playerBoard: Gameboard, computerBoard: Gameboard) {
+  return playerBoard.checkAllSunk() || computerBoard.checkAllSunk();
+}
+
+export function gameOn() {
+  drawBoard(player.playerboard, "Player");
+  drawBoard(computer.playerboard, computer.name);
+  setUpListener(computer, player);
   // Human player goes first because robots need to know their place
-  let playerTurn = player;
 
   // Place all ships for computer randomly
   computer.placeRandomShip(computer.playerboard, 5, "Carrier");
@@ -62,23 +89,5 @@ while (game_on) {
   player.placeRandomShip(player.playerboard, 3, "Submarine");
   player.placeRandomShip(player.playerboard, 2, "Patrol Boat");
 
-  //Test
-  findCell(0, 0);
-
-  while (playerTurn) {
-    // Set up event listener on computer's game board
-    setUpListener(computer);
-    refreshTurn(player);
-    break;
-  }
-
-  while (!playerTurn) {
-    teardownListener(computer);
-    refreshTurn(computer);
-    let coords = computer.randomAttack(player.playerboard)!;
-    attackCell(findCell(coords[0], coords[1]), player);
-    break;
-  }
-
-  break;
+  playerTurn();
 }

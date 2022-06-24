@@ -67,7 +67,7 @@ test("All ships not sunk", () => {
 
 test("All ships sunk", () => {
   const board = new Gameboard();
-  board.placeShip(new Ship(2, "Patrol Boat"), false, 0, 0);
+  board.placeShip(new Ship(2, "Patrol Boat"), true, 0, 0);
   board.receiveAttack(0, 0);
   board.receiveAttack(1, 0);
   expect(board.board[0][0]).toBe(3);
